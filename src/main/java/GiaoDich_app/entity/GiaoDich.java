@@ -19,7 +19,7 @@ public abstract class GiaoDich {
     //tinh tong thanh tien
     public abstract double tinhThanhTien();
     //tinh tong so luong tung loaiGD
-    public abstract int tinhTongSoLuong();
+    public abstract int tinhTongSoLuongGD();
 
     public int getMaGiaoDich() {
         return maGiaoDich;

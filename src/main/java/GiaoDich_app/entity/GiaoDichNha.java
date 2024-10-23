@@ -6,7 +6,7 @@ public class GiaoDichNha extends GiaoDich{
     private String loaiNha;
     private String diaChi;
 
-    public GiaoDichNha(String diaChi, String loaiNha, double dienTich, double donGia, Date ngayGiaoDich, String loaiGD) {
+    public GiaoDichNha(String diaChi, String loaiNha, double dienTich, double donGia, Date ngayGiaoDich) {
         super(dienTich, donGia, ngayGiaoDich, "Nha");
         this.diaChi = diaChi;
         this.loaiNha = loaiNha;
@@ -28,7 +28,7 @@ public class GiaoDichNha extends GiaoDich{
     };
 
     @Override
-    public int tinhTongSoLuong(){
+    public int tinhTongSoLuongGD(){
         return 0;
     }
 }

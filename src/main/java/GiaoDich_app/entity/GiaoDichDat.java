@@ -25,7 +25,7 @@ public class GiaoDichDat extends GiaoDich {
         }
     }
     @Override
-    public int tinhTongSoLuong() {
+    public int tinhTongSoLuongGD() {
       return 0;  
     }
 }
