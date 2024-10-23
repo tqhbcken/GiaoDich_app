@@ -6,12 +6,14 @@ public class GiaoDichNha extends GiaoDich{
     private String loaiNha;
     private String diaChi;
 
-
-    public GiaoDichNha(String loaiNha, double dienTich, double donGia, int maGiaoDich, Date ngayGiaoDich, String diaChi) {
-        super(dienTich, donGia, maGiaoDich, ngayGiaoDich);
+    public GiaoDichNha(String diaChi, String loaiNha, double dienTich, double donGia, Date ngayGiaoDich, String loaiGD) {
+        super(dienTich, donGia, ngayGiaoDich, "Nha");
+        this.diaChi = diaChi;
         this.loaiNha = loaiNha;
-        this.diaChi= diaChi;
     }
+
+
+    
 
     @Override
     public double tinhThanhTien(){
@@ -24,4 +26,9 @@ public class GiaoDichNha extends GiaoDich{
             return 0;
         }
     };
+
+    @Override
+    public int tinhTongSoLuong(){
+        return 0;
+    }
 }

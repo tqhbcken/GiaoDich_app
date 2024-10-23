@@ -7,8 +7,9 @@ public class GiaoDichDat extends GiaoDich {
     private String loaiDat;
 
 
-    public GiaoDichDat(double dienTich, double donGia, int maGiaoDich, Date ngayGiaoDich, String loaiDat) {
-        super(dienTich, donGia, maGiaoDich, ngayGiaoDich);
+    public GiaoDichDat(double dienTich, double donGia, Date ngayGiaoDich, String loaiDat) {
+        super(dienTich, donGia, ngayGiaoDich, "Dat");
+        this.loaiDat = loaiDat;
     }
 
     @Override
@@ -16,13 +17,15 @@ public class GiaoDichDat extends GiaoDich {
         // Giả sử: đất loại A có hệ số 1.5, đất loại B là 1.2, đất loại C là 1.0
         if (loaiDat.equalsIgnoreCase("A")) {
             return super.getDienTich() * super.getDonGia() * 1.5;
-        } else if (loaiDat.equalsIgnoreCase("B")) {
-            return super.getDienTich() * super.getDonGia() * 1.2;
-        } else if (loaiDat.equalsIgnoreCase("C")) {
-            return super.getDienTich() * super.getDonGia() * 1.0;
+        } else if (loaiDat.equalsIgnoreCase("B") || loaiDat.equalsIgnoreCase("C")) {
+            return super.getDienTich() * super.getDonGia() ;       
         } else {
             // Nếu loại đất không hợp lệ, trả về 0
             return 0;
         }
+    }
+    @Override
+    public int tinhTongSoLuong() {
+      return 0;  
     }
 }

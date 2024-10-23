@@ -7,15 +7,19 @@ public abstract class GiaoDich {
     protected Date ngayGiaoDich;
     protected double donGia;
     protected double dienTich;
+    protected String loaiGD;
 
-    public GiaoDich(double dienTich, double donGia, int maGiaoDich, Date ngayGiaoDich) {
+    public GiaoDich(double dienTich, double donGia, Date ngayGiaoDich, String loaiGD) {
         this.dienTich = dienTich;
-        this.donGia = donGia;
-        this.maGiaoDich = maGiaoDich;
+        this.donGia = donGia;       
         this.ngayGiaoDich = ngayGiaoDich;
+        this.loaiGD = loaiGD;
     }
 
+    //tinh tong thanh tien
     public abstract double tinhThanhTien();
+    //tinh tong so luong tung loaiGD
+    public abstract int tinhTongSoLuong();
 
     public int getMaGiaoDich() {
         return maGiaoDich;
@@ -31,6 +35,10 @@ public abstract class GiaoDich {
 
     public double getDienTich() {
         return dienTich;
+    }
+
+    public String getLoaiGD() {
+        return loaiGD;
     }
 
 
