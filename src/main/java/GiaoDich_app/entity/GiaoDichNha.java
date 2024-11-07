@@ -3,6 +3,7 @@ package GiaoDich_app.entity;
 import java.util.Date;
 
 public class GiaoDichNha extends GiaoDich{
+    
     private String loaiNha;
     private String diaChi;
 
@@ -12,23 +13,41 @@ public class GiaoDichNha extends GiaoDich{
         this.loaiNha = loaiNha;
     }
 
-
+    
     
 
     @Override
-    public double tinhThanhTien(){
-        if (loaiNha.equalsIgnoreCase("Vip")) {
-            return super.getDienTich() * super.getDonGia();
-        } else if (loaiNha.equalsIgnoreCase("Normal")) {
-            return super.getDienTich() * super.getDonGia() * 0.9;
-        } else {
-            // Nếu loại đất không hợp lệ, trả về 0
-            return 0;
-        }
-    };
+    public double tinhThanhTien() {
+        double thanhTien = 0;
 
-    @Override
-    public int tinhTongSoLuongGD(){
-        return 0;
+        // Kiểm tra các thuộc tính trước khi sử dụng
+        if (loaiNha == null) {
+            throw new IllegalArgumentException("loaiNha cannot be null");
+        }
+        
+        // Tính toán giá trị thanh toán dựa trên loaiNha
+        switch (loaiNha) {
+            case "Vip":
+                thanhTien = getDienTich() * getDonGia() * 2; // Ví dụ: Loại 1 có giá gấp 2
+                break;
+            case "Normal":
+                thanhTien = getDienTich() * getDonGia();
+                break;
+            default:
+                thanhTien = 0; // Trường hợp không hợp lệ
+                break;
+        }
+
+        return thanhTien;
     }
+
+    public String getLoaiNha() {
+        return loaiNha;
+    }
+
+    public String getDiaChi() {
+        return diaChi;
+    }
+
+
 }

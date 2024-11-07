@@ -1,5 +1,20 @@
 {
   "java.project.explorer.showNonJavaResources": true,
   "java.dependency.packagePresentation": "hierarchical",
-  "java.configuration.updateBuildConfiguration": "interactive"
+  "java.configuration.updateBuildConfiguration": "interactive",
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default",
+        "enableSsl": "Disabled"
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3306,
+      "driver": "MySQL",
+      "username": "root",
+      "name": "MySql Conn",
+      "database": "batdongsan"
+    }
+  ]
 }

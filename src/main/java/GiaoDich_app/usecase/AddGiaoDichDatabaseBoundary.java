@@ -7,3 +7,4 @@ public interface AddGiaoDichDatabaseBoundary {
     GiaoDich findGiaoDichById(int id);
     
 }
+

@@ -3,7 +3,7 @@ package GiaoDich_app.entity;
 import java.util.Date;
 
 public abstract class GiaoDich {
-    protected int maGiaoDich;
+    public int maGiaoDich;
     protected Date ngayGiaoDich;
     protected double donGia;
     protected double dienTich;
@@ -19,7 +19,9 @@ public abstract class GiaoDich {
     //tinh tong thanh tien
     public abstract double tinhThanhTien();
     //tinh tong so luong tung loaiGD
-    public abstract int tinhTongSoLuongGD();
+    public int tinhTongSoLuongGD(){
+        return 0;
+    };
 
     public int getMaGiaoDich() {
         return maGiaoDich;

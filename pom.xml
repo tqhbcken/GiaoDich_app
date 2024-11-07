@@ -20,6 +20,11 @@
 
     <dependencies>
         
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version> <!-- hoặc phiên bản hiện tại bạn đang dùng -->
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>

@@ -9,76 +9,62 @@ import GiaoDich_app.usecase.dto.AddGiaoDichInputDTO;
 import GiaoDich_app.usecase.dto.AddGiaoDichOutputDTO;
 
 public class AddGiaoDichUseCase implements AddGiaoDichInputBoundary {
-    private AddGiaoDichOutputBoundary addGiaoDichOutputBoundary;
-    private AddGiaoDichDatabaseBoundary addGiaoDichDatabaseBoundary;
+
+    private AddGiaoDichOutputBoundary addGiaoDichOutputBoundary = null;
+    private AddGiaoDichDatabaseBoundary addGiaoDichDatabaseBoundary = null;
 
     public AddGiaoDichUseCase(AddGiaoDichOutputBoundary addGiaoDichOutputBoundary,
-                              AddGiaoDichDatabaseBoundary addGiaoDichDatabaseBoundary) {
+            AddGiaoDichDatabaseBoundary addGiaoDichDatabaseBoundary) {
         this.addGiaoDichOutputBoundary = addGiaoDichOutputBoundary;
         this.addGiaoDichDatabaseBoundary = addGiaoDichDatabaseBoundary;
     }
 
     @Override
     public void execute(AddGiaoDichInputDTO addGiaoDichInputDTO) {
-        //validate
-        //store dg
-        GiaoDich giaodich = null;
+        // Xác thực dữ liệu đầu vào
+        if (!validateInput(addGiaoDichInputDTO)) {
+            throw new IllegalArgumentException("Invalid input data");
+        }
+
+        GiaoDich giaoDich = null;
         Date ngayGiaoDich = addGiaoDichInputDTO.getNgayGiaoDich();
         double dienTich = addGiaoDichInputDTO.getDienTich();
         double donGia = addGiaoDichInputDTO.getDonGia();
 
-        if(addGiaoDichInputDTO.getLoaiGD().equals("Dat")){
-            // Kiểm tra loại đất trước khi tạo đối tượng
-            
-            giaodich = new GiaoDichDat(dienTich, donGia, ngayGiaoDich, addGiaoDichInputDTO.getLoaiDat());
-        }else {
-            giaodich = new GiaoDichNha(addGiaoDichInputDTO.getDiaChi(), addGiaoDichInputDTO.getLoaiNha(), dienTich, donGia, ngayGiaoDich);
+        if ("Dat".equals(addGiaoDichInputDTO.getLoaiGD())) {
+            giaoDich = new GiaoDichDat(dienTich, donGia, ngayGiaoDich, addGiaoDichInputDTO.getLoaiDat());
+        } else if ("Nha".equals(addGiaoDichInputDTO.getLoaiGD())) {
+            giaoDich = new GiaoDichNha(addGiaoDichInputDTO.getDiaChi(), addGiaoDichInputDTO.getLoaiNha(), dienTich, donGia, ngayGiaoDich);
+        } else {
+            throw new IllegalArgumentException("Invalid transaction type");
         }
 
-        //them vao db
-        int addedGiaoDichId = addGiaoDichDatabaseBoundary.addGiaoDich(giaodich);
+        // Thêm vào cơ sở dữ liệu
+        int addedGiaoDichId = addGiaoDichDatabaseBoundary.addGiaoDich(giaoDich);
 
-        //tim theo id
+        // Tìm theo ID
         GiaoDich addedGiaoDich = addGiaoDichDatabaseBoundary.findGiaoDichById(addedGiaoDichId);
 
         AddGiaoDichOutputDTO addGiaoDichOutputDTO = new AddGiaoDichOutputDTO(
                 addedGiaoDich.getMaGiaoDich(), addedGiaoDich.getNgayGiaoDich(), addedGiaoDich.getDonGia(),
-                addedGiaoDich.getDienTich(), addedGiaoDich.tinhThanhTien(), addedGiaoDich.tinhTongSoLuongGD()
+                addedGiaoDich.getDienTich(), addedGiaoDich.tinhThanhTien(), addedGiaoDich.tinhTongSoLuongGD(),
+                addedGiaoDich.getLoaiGD()
         );
 
         addGiaoDichOutputBoundary.present(addGiaoDichOutputDTO);
     }
 
-    private boolean validateGiaoDichType(AddGiaoDichInputDTO dto) {
-        return dto.getLoaiGD().equals("Dat") || dto.getLoaiGD().equals("Nha");
-    }
-
-    private boolean validateLoaiDat(AddGiaoDichInputDTO dto) {
-        return dto.getLoaiGD().equals("Dat") && validateLoaiDatType(dto);
-    }
-    
-    private boolean validateLoaiDatType(AddGiaoDichInputDTO dto) {
-        return dto.getLoaiDat().equals("A") || dto.getLoaiDat().equals("B") || dto.getLoaiDat().equals("C");
-    }
-
     private boolean validateInput(AddGiaoDichInputDTO dto) {
-        return validateNgayGiaoDich(dto.getNgayGiaoDich()) &&
-               validateDonGia(dto.getDonGia()) &&
-               validateDienTich(dto.getDienTich());
-    }
+        boolean isValid = dto.getNgayGiaoDich() != null &&
+                          dto.getDonGia() > 0 &&
+                          dto.getDienTich() > 0;
 
-    private boolean validateNgayGiaoDich(Date ngayGiaoDich) {
-        // Kiểm tra xem ngày giao dịch có hợp lệ hay không
-        return ngayGiaoDich != null && !ngayGiaoDich.after(new Date());
-    }
+        if ("Dat".equals(dto.getLoaiGD())) {
+            isValid = isValid && dto.getLoaiDat() != null;
+        } else if ("Nha".equals(dto.getLoaiGD())) {
+            isValid = isValid && dto.getLoaiNha() != null;
+        }
 
-    private boolean validateDonGia(double donGia) {
-        // Kiểm tra xem đơn giá có hợp lệ hay không
-        return donGia > 0;
-    }
-
-    private boolean validateDienTich(double dienTich) {
-        // Kiểm tra xem diện tích có hợp lệ hay không
-        return dienTich > 0;
+        return isValid;
     }
 }
