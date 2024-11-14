@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: GiaoDich_app.DisplayGiaoDichUseCaseTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.056 s <<< FAILURE! - in GiaoDich_app.DisplayGiaoDichUseCaseTest
+testExecute_shouldHandleException(GiaoDich_app.DisplayGiaoDichUseCaseTest)  Time elapsed: 0.005 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "GiaoDich_app.usecase.DisplayGiaoDichDatabaseBoundary.getAllGiaoDich()" because "this.databaseBoundary" is null
+	at GiaoDich_app.DisplayGiaoDichUseCaseTest.testExecute_shouldHandleException(DisplayGiaoDichUseCaseTest.java:76)
+

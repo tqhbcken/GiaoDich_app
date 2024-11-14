@@ -1,17 +1,26 @@
 package GiaoDich_app.database;
 
-import java.util.Map;
 
-import GiaoDich_app.entity.GiaoDich;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import GiaoDich_app.database.DBConnector.DatabaseConnector;
 
 public class DeleteGiaoDichDAODB {
-    private Map<Integer, GiaoDich> mockDatabase;
-
-    public DeleteGiaoDichDAODB(Map<Integer, GiaoDich> mockDatabase) {
-        this.mockDatabase = mockDatabase;
-    }
-
-    public boolean deleteGiaoDich(int giaoDichId) {
-        return mockDatabase.remove(giaoDichId) != null;
+    public boolean deleteGiaoDich(String maGiaoDich) {
+        String sql = "DELETE FROM giao_dich WHERE ma_giao_dich = ?";
+        
+        try (Connection conn = DatabaseConnector.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setString(1, maGiaoDich);
+            int rowsDeleted = stmt.executeUpdate();
+            return rowsDeleted > 0;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

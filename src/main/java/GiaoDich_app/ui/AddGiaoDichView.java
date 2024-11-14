@@ -3,6 +3,7 @@ package GiaoDich_app.ui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.ModuleLayer.Controller;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -24,6 +25,7 @@ public class AddGiaoDichView extends JFrame {
     private AddGiaoDichController controller = null;
 
     public AddGiaoDichView() {
+        
         setTitle("Giao Dịch Bất Động Sản");
         setSize(400, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -215,23 +217,21 @@ public class AddGiaoDichView extends JFrame {
         SwingUtilities.invokeLater(() -> {
             AddGiaoDichView form = new AddGiaoDichView();
             try {
-                Connection connection = DatabaseConnector.getConnection();  // Lấy kết nối từ DatabaseConnector
+                Connection connection = DatabaseConnector.getConnection();
                 AddGiaoDichDAODB addGiaoDichDAODB = new AddGiaoDichDAODB(connection); // Truyền kết nối vào constructor
                 AddGiaoDichPresenter addGiaoDichPresenter = new AddGiaoDichPresenter();
-                AddGiaoDichUseCase addGiaoDichUseCase = new AddGiaoDichUseCase(addGiaoDichPresenter, addGiaoDichDAODB);
-                AddGiaoDichController addGiaoDichController = new AddGiaoDichController(addGiaoDichUseCase);
+                AddGiaoDichUseCase addGiaoDichUseCase = new AddGiaoDichUseCase(addGiaoDichPresenter, addGiaoDichDAODB); // Khởi tạo đúng AddGiaoDichUseCase
+                AddGiaoDichController addGiaoDichController = new AddGiaoDichController(addGiaoDichUseCase); // Truyền AddGiaoDichUseCase cho controller
                 form.setController(addGiaoDichController);
                 form.setVisible(true);
-            } catch (Exception e) {  // Thay thế SQLException bằng Exception
+            } catch (Exception e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Không thể kết nối cơ sở dữ liệu!");
             }
         });
-    }
-    
-
-
+    }  
     public void setController(AddGiaoDichController controller) {
         this.controller = controller;
     }
+
 }
