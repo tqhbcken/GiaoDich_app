@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: GiaoDich_app.Delete.DeleteGiaoDichUseCase
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.419 s <<< FAILURE! - in GiaoDich_app.Delete.DeleteGiaoDichUseCase
+testDeleteGiaoDich_Success(GiaoDich_app.Delete.DeleteGiaoDichUseCase)  Time elapsed: 0.375 s  <<< FAILURE!
+java.lang.AssertionError
+	at GiaoDich_app.Delete.DeleteGiaoDichUseCase.testDeleteGiaoDich_Success(DeleteGiaoDichUseCase.java:22)
+
